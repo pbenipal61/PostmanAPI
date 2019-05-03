@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-import User from './User';
+
 
 const contactSchema = new mongoose.Schema({
   name: String,
@@ -61,6 +61,6 @@ const eventSchema = new mongoose.Schema({
 });
 
 
-export default mongoose.model('Event', eventSchema);
+module.exports = mongoose.model('Event', eventSchema);
 
 

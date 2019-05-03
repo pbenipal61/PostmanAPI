@@ -2,12 +2,12 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const cors = require('cors');
-import logger from 'morgan';
+const logger = require('morgan');
 require('dotenv').config();
 const DB_PASS = process.env.DB_PASS || 'password';
 const DB_USER = process.env.DB_USER || 'root';
 const DB = process.env.DB || 'Postman';
-import routes from './routes';
+const routes = require('./routes');
 
 require('dotenv').config();
 

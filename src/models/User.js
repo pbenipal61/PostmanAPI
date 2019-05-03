@@ -1,5 +1,5 @@
-import mongoose from 'mongoose';
-import bcrypt from 'bcrypt';
+const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
 const userSchema = new mongoose.Schema({
@@ -58,4 +58,4 @@ userSchema.pre('save', function(next) {
   next();
 });
 
-export default mongoose.model('User', userSchema);
+module.exports= mongoose.model('User', userSchema);

@@ -48,4 +48,4 @@ const createEvent = (fields)=> {
   });
 };
 
-export {createEvent};
+module.exports = {createEvent};

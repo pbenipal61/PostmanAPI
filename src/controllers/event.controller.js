@@ -1,5 +1,5 @@
-import Event from '../models/Event';
-import {createEvent as eventFactory} from '../factories';
+const Event = require('../models/Event');
+const eventFactory = require('../factories').createEvent;
 
 const getEvents = (req, res, next) =>{
   Event.find().then((events) => {
@@ -29,4 +29,4 @@ const postEvent = async (req, res, next) => {
   res.status(200).send(eventSaveResult);
 };
 
-export {getEvents, getEventById, postEvent};
+module.exports = {getEvents, getEventById, postEvent};

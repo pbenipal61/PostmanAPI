@@ -1,6 +1,6 @@
-import apiRoute from './api';
-import usersRoute from './users';
-import {validateUser} from '../controllers/user.controller';
+const apiRoute = require('./api');
+const usersRoute = require( './users');
+const {validateUser} = require('../controllers/user.controller');
 const init = (app) => {
   app.get('*', function(req, res, next) {
     console.log('Request was made to: ' + req.originalUrl);
@@ -11,4 +11,4 @@ const init = (app) => {
   app.use('/users', usersRoute);
 };
 
-export default init;
+module.exports = init;

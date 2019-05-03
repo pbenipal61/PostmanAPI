@@ -50,5 +50,8 @@ const validateUser = (req, res, next) => {
   }
 };
 
-
-module.exports = {register, login, validateUser};
+const locale = (req, res, next) => {
+  const ipInfo = req.ipInfo;
+  res.status(200).send(ipInfo);
+};
+module.exports = {register, login, validateUser, locale};

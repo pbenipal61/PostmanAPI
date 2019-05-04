@@ -33,66 +33,38 @@ const login = (req, res, next) => {
     lastLogin: Date.now(),
   };
 
-  if (req.body.email) {
-    User.findOneAndUpdate({email: req.body.email}, updateObj)
-        .exec()
-        .then((user) => {
-          if (bcrypt.compareSync(req.body.password, user.password)) {
-            const token = jwt.sign({id: user._id},
-                secret,
-                {expiresIn: '365d'} );
-            res.status(200).json({user, token});
-          } else {
-            res.status(200).json('Invalid email or password');
-          }
-        })
-        .catch((err) => {
-          res.status(400).json({'response': 'User not found'});
-        });
-
-
-    // User.findOne({email: req.body.email}, (err, user) => {
-    //   if (err) {
-    //     next(err);
-    //   } else {
-    //     if (bcrypt.compareSync(req.body.password, user.password)) {
-    //       const token = jwt.sign({id: user._id},
-    //           secret,
-    //           {expiresIn: '365d'} );
-    //       res.status(200).json({user, token});
-    //     } else {
-    //       res.status(200).json('Invalid email or password');
-    //     }
-    //   }
-    // });
-  } else {
-    // User.find(req.body.id, (err, user) => {
-    //   if (err) {
-    //     next(err);
-    //   } else {
-    //     if (bcrypt.compareSync(req.body.password, user.password)) {
-    //       const token = jwt.sign({id: user._id},
-    //           secret,
-    //           {expiresIn: '365d'} );
-    //       res.status(200).json({user, token});
-    //     } else {
-    //       res.status(200).json('Invalid email or password');
-    //     }
-    //   }
-    // });
-
-    User.findByIdAndUpdate(req.body.id, updateObj)
-        .exec()
-        .then((user) => {
+  User.findOneAndUpdate([{
+    $match: {
+      $or: [{email: req.body.username}, {username: req.body.username}],
+    },
+  }], updateObj)
+      .exec()
+      .then((user) => {
+        if (bcrypt.compareSync(req.body.password, user.password)) {
           const token = jwt.sign({id: user._id},
               secret,
               {expiresIn: '365d'} );
           res.status(200).json({user, token});
-        })
-        .catch((err) => {
-          res.status(400).json({'response': 'User not found'});
-        });
-  }
+        } else {
+          res.status(200).json('Invalid email or password');
+        }
+      }).catch((err) => res.status(404).json({'result': 'user not found'}));
+
+  // User.findOneAndUpdate({email: req.body.email}, updateObj)
+  //     .exec()
+  //     .then((user) => {
+  //       if (bcrypt.compareSync(req.body.password, user.password)) {
+  //         const token = jwt.sign({id: user._id},
+  //             secret,
+  //             {expiresIn: '365d'} );
+  //         res.status(200).json({user, token});
+  //       } else {
+  //         res.status(200).json('Invalid email or password');
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       res.status(400).json({'response': 'User not found'});
+  //     });
 };
 
 const validateUser = (req, res, next) => {

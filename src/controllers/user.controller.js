@@ -10,7 +10,7 @@ const register = (req, res, next) => {
     city, country, continent} = req.body;
   User.create({
     firstName, lastName, email, password,
-    language, city, country, continent,
+    language, city, country, continent, bio,
   }, (err, result) => {
     if (err) {
       next(err);

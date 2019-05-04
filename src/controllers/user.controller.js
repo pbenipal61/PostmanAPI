@@ -4,16 +4,25 @@ const bcrypt = require('bcrypt');
 require('dotenv').config();
 const secret = process.env.SECRET_KEY || 'secretKey';
 
+
 const register = (req, res, next) => {
   const {firstName, lastName, email, password, language,
     city, country, continent} = req.body;
   User.create({
     firstName, lastName, email, password, language, city, country, continent,
   }, (err, result) => {
-    if (err) next(err);
-    else res.json({message: 'Registered', user: result});
+    if (err) {
+      next(err);
+    } else {
+      const token = jwt.sign({id: result._id},
+          secret,
+          {expiresIn: '365d'}
+      );
+      res.status(200).json({token});
+    }
   });
 };
+
 
 const login = (req, res, next) => {
   User.findOne({email: req.body.email}, (err, user) => {

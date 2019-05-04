@@ -50,7 +50,7 @@ const metaSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.Date,
     default: new Date(),
   },
-  by: mongoose.Schema.Types.ObjectId,
+  by: String,
 });
 
 

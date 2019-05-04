@@ -38,7 +38,7 @@ const login = (req, res, next) => {
       $or: [{email: req.body.username}, {username: req.body.username}],
     },
   }], updateObj)
-      .select('-password -createdAt -updatedAt -loginCount -language')
+      .select('-createdAt -updatedAt -loginCount -language')
       .exec()
       .then((user) => {
         if (bcrypt.compareSync(req.body.password, user.password)) {
